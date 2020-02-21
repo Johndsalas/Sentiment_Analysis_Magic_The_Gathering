@@ -1,1 +1,5 @@
-Setting up Repository for Analysis
+Magic: The Gathering is a collectable card game developed by Wizards of the Coast Inc. In a typical game, each player combines the cards they have collected into his or her own deck, which they use to compete against other players. Thematically, players assume the roles of powerful mages fighting for supremacy. Cards in each players deck represent spells and other resources each player has at there disposal. A game typically ends when all but one of the participating players is reduced to zero “life” or is otherwise eliminated from the game.
+
+Each card in the game (or at least the great majority of them) have a flavor text printed on them. flavor text has no mechanical effect on games but serve to reinforce the games themes and thus add “flavor” to the card. 
+
+My intent with this project is to use sentiment analysis to explore how different aspects of a card can affect the sentiment of the flavor text of that card. For example, magic in the game is divided into five distinct colors, each with its own unique theme. For this reason, one might expect to see a difference in sentiment based upon a given spells color. I plan to explore as many such relationships as I can during this project. I will then attempt to build a model that can predict sentiment rating based on relevant card properties.

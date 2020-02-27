@@ -1,6 +1,7 @@
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import numpy as np
 import pandas
+import re
 
 def wrangle_mtg():
     '''
@@ -64,18 +65,91 @@ def prepare_mgt(df):
 
     df['colorIdentity'] = np.where(df['colorIdentity'] == 'R', 'Red', df['colorIdentity'])
 
+    # clean up flavorText and groupby flavorText to reduce duplicates
+    df['flavorText'] = df.flavorText.apply(remove)
+
+    df['flavorText'] = df.flavorText.apply(erase_end)
+
+    df['flavorText'] = df.flavorText.apply(remove_space)
+
+    df = df.groupby('flavorText').agg('max').reset_index()
+
+    # reorder columns 
+    df = df[['colorIdentity','types','convertedManaCost','rarity','flavorText']]
+
+    # remove rows with flavor text no in English
+    df = df.drop([12450,12451,12453,12454,12455,12456,12457,12458,12459,12460,12461,12462])
+
+    # remove seen duplicates
+    df = df.drop([2])
+
+    # add sentament and intensity columns
+    df['sentiment'] = df.flavorText.apply(sent_score)
+
+    df['intensity'] = df.sentiment.abs()
+
     return df
 
+def remove(value):
+    '''
+    removes / from text
+    '''
 
+    return re.sub(r"[/]",'', value)
 
+def remove_space(value):
+    '''
+    remove whitespace from around text
+    '''
+    
+    return value.strip()
 
+def erase_end(value):
+    '''
+    remove quote attribution
 
+    '''
+ 
+    count = 0
+    index = 0
+    quote = []
 
+    # itterate through characters in string
+    for letter in value:
+    
+        count += 1
 
+        # if character is a " append it to quote for a count
+        if letter == '\"':
+            quote.append(letter)
 
+            # if quote has a length of 2 set index number and stop counting
+            if len(quote) == 2: 
+                index = count
+                break
+
+ # if quotes exist return string up to the end of the quote
+    if len(quote) >= 2: 
+        
+        return value[:index]
+    
+    # if quotes dont exist return value unchanged
+    else:
+
+        return value
 
 analyser = SentimentIntensityAnalyzer()
 
 def sent_score(sentence):
+    '''
+    get compound score using vader sentament analysis 
+    '''
+    
+    # define analyser
+    analyser = SentimentIntensityAnalyzer()
+    
+    # get sentament score
     score = analyser.polarity_scores(sentence)
-    print(score)
+
+    # return only compound score
+    return score['compound']

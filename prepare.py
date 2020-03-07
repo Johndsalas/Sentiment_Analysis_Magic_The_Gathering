@@ -1,7 +1,27 @@
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import numpy as np
-import pandas
+import pandas as pd
 import re
+import pathlib
+
+def get_mtg_data():
+
+    file = pathlib.Path("mtgprep.csv")
+
+    if file.exists ():
+
+        df = pd.read_csv('mtgprep.csv')
+
+    else:
+        
+        df = prepare_mtg(wrangle_mtg())
+
+        df.to_csv('mtgprep.csv', index=False)
+
+    return df
+
+
+
 
 def wrangle_mtg():
     '''
@@ -9,14 +29,14 @@ def wrangle_mtg():
     '''
 
     # read cards.csv into a pandas dataframe
-    df = pandas.read_csv('cards.csv')
+    df = pd.read_csv('cards.csv')
 
     # rewite data frame with only relavent columns
     df = df[['colorIdentity','types','convertedManaCost','rarity','flavorText','isPaper']]
 
     return df
 
-def prepare_mgt(df):
+def prepare_mtg(df):
     '''
     Prepare mtg data for analysis
     '''
@@ -81,12 +101,17 @@ def prepare_mgt(df):
     df = df.drop([12450,12451,12453,12454,12455,12456,12457,12458,12459,12460,12461,12462])
 
     # remove seen duplicates
-    df = df.drop([2])
+    df = df.drop([2,7968,6562])
+
+    # rename columns 
+    df=df.rename(columns={'colorIdentity':'color','convertedManaCost':'cost','flavorText':'flavor'})
 
     # add sentament and intensity columns
     df['sentiment'] = df.flavorText.apply(sent_score)
 
     df['intensity'] = df.sentiment.abs()
+
+    
 
     return df
 
@@ -153,3 +178,9 @@ def sent_score(sentence):
 
     # return only compound score
     return score['compound']
+
+
+
+df = get_mtg_data()
+
+df.head()

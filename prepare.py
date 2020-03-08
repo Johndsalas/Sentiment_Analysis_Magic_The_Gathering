@@ -5,13 +5,19 @@ import re
 import pathlib
 
 def get_mtg_data():
+    '''
+    Get or create prepared data "mtgprep.csv"
+    '''
 
+    # define file name
     file = pathlib.Path("mtgprep.csv")
 
+    # if file exists open file as pandas data frame
     if file.exists ():
 
         df = pd.read_csv('mtgprep.csv')
 
+    # if file does not exist aquire and prep data from 'cards.csv' and write that data to 'mtgprep.csv'
     else:
         
         df = prepare_mtg(wrangle_mtg())
@@ -20,26 +26,24 @@ def get_mtg_data():
 
     return df
 
-
-
-
 def wrangle_mtg():
     '''
-    Wrangle pandas data frame with relavent columns
+    Aquire data from 'cards.csv' and convert it to a pandas data frame
     '''
 
     # read cards.csv into a pandas dataframe
     df = pd.read_csv('cards.csv')
 
-    # rewite data frame with only relavent columns
-    df = df[['colorIdentity','types','convertedManaCost','rarity','flavorText','isPaper']]
-
+    
     return df
 
 def prepare_mtg(df):
     '''
     Prepare mtg data for analysis
     '''
+
+    # rewite data frame with only relavent columns
+    df = df[['colorIdentity','types','convertedManaCost','rarity','flavorText','isPaper']]
 
     # use only cards that exist as phisycal cards
     df = df[df.isPaper==1]
@@ -111,8 +115,6 @@ def prepare_mtg(df):
 
     df['intensity'] = df.sentiment.abs()
 
-    
-
     return df
 
 def remove(value):
@@ -163,8 +165,6 @@ def erase_end(value):
 
         return value
 
-analyser = SentimentIntensityAnalyzer()
-
 def sent_score(sentence):
     '''
     get compound score using vader sentament analysis 
@@ -178,9 +178,3 @@ def sent_score(sentence):
 
     # return only compound score
     return score['compound']
-
-
-
-df = get_mtg_data()
-
-df.head()

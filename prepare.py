@@ -107,13 +107,15 @@ def prepare_mtg(df):
     # remove seen duplicates
     df = df.drop([2,7968,6562])
 
-    # rename columns 
-    df=df.rename(columns={'colorIdentity':'color','convertedManaCost':'cost','flavorText':'flavor'})
-
     # add sentament and intensity columns
     df['sentiment'] = df.flavorText.apply(sent_score)
 
     df['intensity'] = df.sentiment.abs()
+
+    # rename columns 
+    df=df.rename(columns={'colorIdentity':'color','types':'type','convertedManaCost':'cost','flavorText':'flavor'})
+
+    df = df.round(2)
 
     return df
 

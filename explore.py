@@ -13,15 +13,17 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 
-
 def get_value_counts(df):
     '''
     Print value Count for features in data frame
     '''
-
+    # itterate through columns
     for column in df.columns:
     
+        # exclude unwanted columns
         if column not in ('sentiment','flavor','intensity'):
+
+            # print value caounts for each column
             print(f'{column} value counts')
             print(df[f'{column}'].value_counts())
             print('')
@@ -31,15 +33,19 @@ def sent_percent(df):
     Print percent of positive negative and zore sentiment scores 
     '''
 
+    # print title
     print("Positive and Negative Sentiment Scores")
     print('')
 
+    # get count of positive negative and zero sentimen values
     positive = df[df.sentiment>0].sentiment.count()
     negative = df[df.sentiment<0].sentiment.count()
     zero = df[df.sentiment==0].sentiment.count()
     
+    # get total number of values
     total = df.sentiment.count()
-          
+    
+    # print percent of positive, negative, and zeor sentiment values
     print(f'Positive: {round(positive/total,2)}%  Negative: {round(negative/total,2)}%  Zero: {round(zero/total,2)}%')
 
 
@@ -48,12 +54,14 @@ def sent_dist(df):
     Print sentiment distribution for full data set with and without zero scores included
     '''
     
+    # define bins
     bins =[-1,-.9,-.8,-.7,-.6,-.5,-.4,-.3,-.2,-.1,0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1]
 
+    # dfine sentiment with zeros
     sentiment = df['sentiment']
 
-    plt.hist(sentiment,bins=bins,edgecolor='black')
-
+    # print first graph
+    plt.hist(sentiment,bins=bins,edgecolor='black',color='mistyrose')
 
     plt.title('Fequency of Sentiment Scores')
     plt.xlabel('Sentiment Scores')
@@ -63,10 +71,11 @@ def sent_dist(df):
 
     plt.show()
 
+    # define sentiment for second graph
     sentiment = df.sentiment[df.sentiment!=0]
 
-    plt.hist(sentiment,bins=bins,edgecolor='black')
-
+    # print second graph
+    plt.hist(sentiment,bins=bins,edgecolor='black',color='mistyrose')
 
     plt.title('Fequency of Sentiment Scores With Zeros Removed')
     plt.xlabel('Sentiment Scores')
@@ -81,12 +90,14 @@ def int_dist(df):
     Print intensity distribution for full data set with and without zero scores included
     '''
 
+    # define bins
     bins =[0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1]
 
+    # define intensity for first graph
     intensity = df['intensity']
 
-    plt.hist(intensity,bins=bins,edgecolor='black')
-
+    # plot first graph
+    plt.hist(intensity,bins=bins,edgecolor='black',color='mistyrose')
 
     plt.title('Fequency of Intensity Scores')
     plt.xlabel('Sentiment Scores')
@@ -95,10 +106,11 @@ def int_dist(df):
     plt.tight_layout()
     plt.show()
 
+    # define intensity for second graph
     intensity = df.intensity[df.intensity!=0]
 
-    plt.hist(intensity,bins=bins,edgecolor='black')
-
+    # plot second graph
+    plt.hist(intensity,bins=bins,edgecolor='black',color='mistyrose')
 
     plt.title('Fequency of Intensity Scores With Zeros Removed')
     plt.xlabel('Sentiment Scores')
@@ -112,7 +124,12 @@ def get_scores_color(df):
         Print mean, median, and mode sentiment scores by color
         '''
 
+        # define colors
         colors = ['White','Blue','Black','Red','Green']
+
+        # for mean, median, and mode 
+        # print title for that measure
+        # then itterate through each color and print measure for that color
 
         print('Mean Sentiment by Color')
 
@@ -143,6 +160,9 @@ def get_scores_color(df):
 
 
 def sent_percent_color(df):
+    '''
+    Print the percent of positive, negative, and zero sentiment scores for each color
+    '''
 
     colors = ['White','Blue','Black','Red','Green']
 
@@ -161,6 +181,9 @@ def sent_percent_color(df):
 
 
 def sent_dist_color(df):
+    '''
+    Print a histograph showing the sentiment distribution for each color
+    '''
 
     colors = ['White','Blue','Black','Red','Green']
 
@@ -184,7 +207,7 @@ def sent_dist_color(df):
 
 def get_scores_type(df):
     '''
-    Print mean, median, and mode sentiment scores by type
+    Print mean, median, and mode sentiment scores for each type
     '''
 
     print('Mean Sentiment by Type')
@@ -217,6 +240,9 @@ def get_scores_type(df):
         print(f'{item}: {round(number,2)}')
 
 def sent_percent_type(df):
+    '''
+    Print the percent of positive, negative, and zero values for each type
+    '''
 
     types = ['Creature','Instant','Sorcery','Enchantment','Land','Artifact','Planeswalker']
 
@@ -235,6 +261,9 @@ def sent_percent_type(df):
 
 
 def sent_dist_type(df):
+    '''
+    Print a histograph showing the sentiment distribution for first five types
+    '''
 
     types = ['Creature','Instant','Sorcery','Enchantment','Land']
     bins =[-1,-.9,-.8,-.7,-.6,-.5,-.4,-.3,-.2,-.1,0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1]
@@ -254,6 +283,9 @@ def sent_dist_type(df):
         plt.show()
 
 def sent_dist_type_2(df):
+    '''
+    Print a histograph showing the sentiment distribution for last two types
+    '''
         
     types = ['Artifact','Planeswalker']
     bins =[-1,-.9,-.8,-.7,-.6,-.5,-.4,-.3,-.2,-.1,0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1]
@@ -308,6 +340,9 @@ def get_scores_rarity(df):
         print(f'{item}: {round(number,2)}')
 
 def sent_percent_rarity(df):
+    '''
+    Print percent of positive, negative, and zero sentiment values for each rarity 
+    '''
 
     scarcity = ['common','uncommon','rare','mythic']
 
@@ -325,6 +360,9 @@ def sent_percent_rarity(df):
         print(f'{item}: Positive: {round(positive/total,2)}%  Negative: {round(negative/total,2)}%  Zero: {round(zero/total,2)}%')
 
 def sent_dist_rarity(df):
+    '''
+    Print a histograph showing the sentiment distribution for each rarity
+    '''
 
     scarcity = ['common','uncommon','rare','mythic']
 
@@ -334,7 +372,7 @@ def sent_dist_rarity(df):
 
         sentiment = df.sentiment[df.sentiment!=0][df.rarity==f'{item}']
 
-        plt.hist(sentiment,bins=bins,edgecolor='black',color='firebrick')
+        plt.hist(sentiment,bins=bins,edgecolor='black',color='mistyrose')
 
         plt.title(f'Fequency of Sentiment Scores in {item} With Zero Scores Removed')
         plt.xlabel('Sentiment Scores')
@@ -346,10 +384,10 @@ def sent_dist_rarity(df):
 
 def get_scores_cost(df):
     '''
-    Print mean median and mode sentiment scores by cost
+    Print mean median and mode sentiment scores for each cost
     '''
 
-    print('Mean Sentiment Scores by Rarity')
+    print('Mean Sentiment Scores by Cost')
 
     for r in range(1,15):
 
@@ -360,7 +398,7 @@ def get_scores_cost(df):
             print(f'{r}: {number}')
 
     print('')
-    print('Median Sentiment Scores by Rarity')
+    print('Median Sentiment Scores by Cost')
 
     for r in range(1,15):
 
@@ -371,7 +409,7 @@ def get_scores_cost(df):
             print(f'{r}: {number}')
 
     print('')
-    print('Mode Sentiment Scores by Rarity')
+    print('Mode Sentiment Scores by Cost')
 
     for r in range(1,15):
 
@@ -382,6 +420,9 @@ def get_scores_cost(df):
             print(f'{r}: {number}')
 
 def sent_percent_cost(df):
+    '''
+    Print percent of positive, negative, and zero sentiment scores for each cost
+    '''
 
     print("Positive and Negative Sentiment Scores")
 
@@ -399,6 +440,9 @@ def sent_percent_cost(df):
             print(f'{r}: Positive: {round(positive/total,2)}%  Negative: {round(negative/total,2)}%  Zero: {round(zero/total,2)}%')
 
 def sent_dist_cost(df):
+    '''
+    Print a histograph showing the sentiment distribution for cost 0-3
+    '''
 
     bins =[-1,-.9,-.8,-.7,-.6,-.5,-.4,-.3,-.2,-.1,0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1]
 
@@ -406,7 +450,7 @@ def sent_dist_cost(df):
         
         sentiment = df.sentiment[df.sentiment!=0][df.cost==r]
 
-        plt.hist(sentiment,bins=bins,edgecolor='black',color='firebrick')
+        plt.hist(sentiment,bins=bins,edgecolor='black',color='mistyrose')
 
 
         plt.title(f'Fequency of Sentiment Scores in {r} With Zero Scores Removed')
@@ -418,6 +462,9 @@ def sent_dist_cost(df):
         plt.show()
 
 def sent_dist_cost_2(df):
+    '''
+    Print a histograph showing the sentiment distribution for cost 4-7
+    '''
 
     bins =[-1,-.9,-.8,-.7,-.6,-.5,-.4,-.3,-.2,-.1,0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1]
 
@@ -427,7 +474,7 @@ def sent_dist_cost_2(df):
         
             sentiment = df.sentiment[df.sentiment!=0][df.cost==r]
 
-            plt.hist(sentiment,bins=bins,edgecolor='black',color='firebrick')
+            plt.hist(sentiment,bins=bins,edgecolor='black',color='mistyrose')
 
 
             plt.title(f'Fequency of Sentiment Scores in {r} With Zero Scores Removed')
@@ -439,6 +486,9 @@ def sent_dist_cost_2(df):
             plt.show()
 
 def sent_dist_cost_3(df):
+    '''
+    Print a histograph showing the sentiment distribution for cost 8-12
+    '''
 
     bins =[-1,-.9,-.8,-.7,-.6,-.5,-.4,-.3,-.2,-.1,0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1]
 
@@ -447,7 +497,7 @@ def sent_dist_cost_3(df):
         
         sentiment = df.sentiment[df.sentiment!=0][df.cost==r]
 
-        plt.hist(sentiment,bins=bins,edgecolor='black',color='firebrick')
+        plt.hist(sentiment,bins=bins,edgecolor='black',color='mistyrose')
 
 
         plt.title(f'Fequency of Sentiment Scores in {r} With Zero Scores Removed')

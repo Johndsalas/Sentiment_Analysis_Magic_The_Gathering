@@ -3,7 +3,7 @@
 1. Determine the primary drivers of sentiment in the flavor text of Magic: The Gathering cards
 2. Develop a model to predict the sentiment of flavor text in Magic: The Gathering cards
 
-Deliverables for this project will be a jupyter notebook containing the analysis and any relavent py files needed to run the notebook.
+Deliverables for this project will be a jupyter notebook containing the analysis and any py files needed to run the notebook.
 
 ### Background info:
 

@@ -46,7 +46,7 @@ def sent_percent(df):
     total = df.sentiment.count()
     
     # print percent of positive, negative, and zeor sentiment values
-    print(f'Positive: {round(positive/total,2)}%  Negative: {round(negative/total,2)}%  Zero: {round(zero/total,2)}%')
+    print(f'Positive: {round((positive/total)*100,0)}%  Negative: {round((negative/total)*100,0)}%  Zero: {round((zero/total)*100,0)}%')
 
 
 def sent_dist(df):
@@ -177,7 +177,7 @@ def sent_percent_color(df):
         total = df[df.color==f'{color}'].sentiment.count()
       
         print('')
-        print(f'{color}: Positive: {round(positive/total,2)}%  Negative: {round(negative/total,2)}%  Zero: {round(zero/total,2)}%')
+        print(f'{color}: Positive: {round((positive/total)*100,0)}%  Negative: {round((negative/total)*100,0)}%  Zero: {round((zero/total)*100,0)}%')
 
 
 def sent_dist_color(df):
@@ -257,7 +257,7 @@ def sent_percent_type(df):
         total = df[df.type==f'{item}'].sentiment.count()
       
         print('')
-        print(f'{item}: Positive: {round(positive/total,2)}%  Negative: {round(negative/total,2)}%  Zero: {round(zero/total,2)}%')
+        print(f'{item}: Positive: {round((positive/total)*100,0)}%  Negative: {round((negative/total)*100,0)}%  Zero: {round((zero/total)*100,0)}%')
 
 
 def sent_dist_type(df):
@@ -357,7 +357,7 @@ def sent_percent_rarity(df):
         total = df[df.rarity==f'{item}'].sentiment.count()
       
         print('')
-        print(f'{item}: Positive: {round(positive/total,2)}%  Negative: {round(negative/total,2)}%  Zero: {round(zero/total,2)}%')
+        print(f'{item}: Positive: {round((positive/total)*100,0)}%  Negative: {round((negative/total)*100,0)}%  Zero: {round((zero/total)*100,0)}%')
 
 def sent_dist_rarity(df):
     '''
@@ -437,7 +437,7 @@ def sent_percent_cost(df):
             total = df[df.cost==r].sentiment.count()
       
             print('')
-            print(f'{r}: Positive: {round(positive/total,2)}%  Negative: {round(negative/total,2)}%  Zero: {round(zero/total,2)}%')
+            print(f'{r}: Positive: {round((positive/total)*100,0)}%  Negative: {round((negative/total)*100,0)}%  Zero: {round((zero/total)*100,0)}%')
 
 def sent_dist_cost(df):
     '''
